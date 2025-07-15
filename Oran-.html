@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>OrangeField·橙的自留地</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- 极简+科幻配色 -->
+  <style>
+    :root{
+      --bg:#0d1117;
+      --text:#c9d1d9;
+      --accent:#00e5ff;
+      --accent2:#0076ff;
+      --font:'JetBrains Mono',monospace;
+    }
+
+    html,body{margin:0;height:100%;overflow:hidden;}
+    body{
+      color:var(--text);
+      background:var(--bg);
+      font-family:var(--font);
+      -webkit-font-smoothing:antialiased;
+    }
+
+    /* === NAV === */
+    nav{
+      position:fixed;
+      z-index:99;
+      top:0;left:0;right:0;
+      display:flex;justify-content:center;
+      background:rgba(0,0,0,.4);backdrop-filter:saturate(180%) blur(8px);
+    }
+    nav a{
+      padding:1rem 1.4rem;
+      color:var(--text);
+      text-decoration:none;
+      transition:.3s;
+      font-size:.9rem;
+      letter-spacing:.05em;
+      cursor:pointer;
+    }
+    nav a.active,nav a:hover{color:var(--accent);}
+    section{
+      display:none;
+      min-height:100vh;
+      padding:20vh 8vw 10vh;
+      flex-direction:column;
+      justify-content:center;
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      box-sizing:border-box;
+    }
+    section.active{display:flex;}
+
+    /* ===== SECTION 霓虹标题动画 ===== */
+    .title{
+      margin-bottom:1.5rem;
+      font-weight:600;
+      font-size:2.2rem;
+      letter-spacing:.1em;
+      position:relative;
+      display:inline-block;
+    }
+    @keyframes neon{
+      0%,100%{text-shadow:0 0 4px var(--accent),0 0 8px var(--accent)}
+      50%{text-shadow:0 0 10px var(--accent2),0 0 16px var(--accent2)}
+    }
+    .title span{color:var(--accent);animation:neon 3s infinite;}
+    h2.title::after{content:'';position:absolute;width:100%;bottom:-4px;left:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .7s cubic-bezier(.8,0,.2,1);}
+    section.inView h2.title::after{transform:scaleX(1);}
+
+    /* ===== 卡片/布局 ===== */
+    .grid{display:grid;gap:1.5rem;}
+    .books{grid-template-columns:repeat(3,1fr);}
+    .posts{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
+
+    .card{
+      padding:1.2rem;
+      border:1px solid rgba(0,229,255,.4);
+      border-radius:6px;
+      background:rgba(255,255,255,.03);
+      transition:.4s;
+      cursor:pointer;
+    }
+    .card:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 0 16px rgba(0,229,255,.5);}
+    h3{margin-top:0;font-size:1.1rem;}
+
+    /* ==== 视差星星背景 ==== */
+    #stars{
+      position:fixed;top:0;left:0;height:100%;width:100%;pointer-events:none;
+      overflow:hidden;
+    }
+    .star{
+      position:absolute;width:2px;height:2px;border-radius:50%;
+      background:var(--accent);
+      opacity:.7;
+      animation:float linear infinite;
+    }
+    @keyframes float{from{transform:translateY(0)}to{transform:translateY(-120vh)}}
+
+    /* ===== 手机友好 ===== */
+    @media(max-width:640px){
+      h2{font-size:1.6rem;}
+      nav a{padding:.7rem;}
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="stars"></canvas>
+
+  <!-- 顶部导航 -->
+  <nav>
+    <a href="#home"      class="active">首页</a>
+    <a href="#reading"             >最近在读</a>
+    <a href="#posts"                >Oran 记</a>
+    <a href="#about"             >认识下我</a>
+  </nav>
+
+  <!-- 1. 首页 -->
+  <section id="home">
+    <h1 style="font-size:3rem;letter-spacing:.15em;line-height:1.2">
+      欢迎来到<br/>
+      <span class="title">OrangeField·<span>橙的自留地</span></span>
+    </h1>
+    <p style="max-width:620px;font-size:1.1rem;opacity:.85">
+      🚀 这里是橙的自留地，我想用这种博客的方式记录、分享我的思考，欢迎来玩<br><br>
+    </p>
+  </section>
+
+  <!-- 2. 最近在读 -->
+  <section id="reading">
+    <h2 class="title"><span>READING</span> 最近在读</h2>
+    <div class="grid books">
+      <div class="card">
+        <h3>《焦虑的人》 @ 弗雷德里克·巴克曼 </h3>
+        <small>进度：Chapter 8<p>是因为《一个叫欧维的男人决定去死》所以读了这本，是一个作者</small>
+      </div>
+      <div class="card">
+        <h3>《大雪将至》 @ 罗伯特·泽塔勒</h3>
+        <small>进度：✅<p>给我一种德国余华的感觉，不过从德国视角看二战也很有意思</small>
+      </div>
+      <div class="card">
+        <h3>《我看见的世界》 @ 李飞飞</h3>
+        <small>进度：✅<p>毫无疑问是我今年读到的TOP1</small>
+      </div>
+      <div class="card">
+        <h3>《娱乐至死》 @ 尼尔·波兹曼</h3>
+        <small>进度：✅<p>隔了半年再看，感觉太不一样了</small>
+      </div>
+      <div class="card">
+        <h3>《岛上书店》 @ 加布瑞埃拉·泽文</h3>
+        <small>进度：✅<p>三年前读的书，现在看也感觉很不一样。少了很多“不理解”</small>
+      </div>
+      <div class="card">
+        <h3>《我的骨头没有忘记》 @斯蒂芬妮·胡</h3>
+        <small>进度：✅<p></p>好像在国内不是很出名，但真的让我重新理解了什么是“创伤”</small>
+      </div>
+      <div class="card">
+        <h3>我很懒，还没写</h3>
+        <small>待添加</small>
+      </div>
+      <div class="card">
+        <h3>我很懒，还没写</h3>
+        <small>待添加</small>
+      </div>
+      <div class="card">
+        <h3>我很懒，还没写</h3>
+        <small>待添加</small>
+      </div>
+    </div>
+    
+  </section>
+
+  <!-- 3. Oran 记 -->
+  <section id="posts">
+    <h2 class="title"><span>POSTS</span> Oran 记</h2>
+    <p>我的小想法，天马行空</p>
+
+    <div class="grid posts">
+      <div class="card" onclick="window.open('https://raw.githubusercontent.com/OranGeeker/blog-posts/main/2024-06-09-edge-runtime.md')">
+        <h3>Edge Runtime 与 WebContainer 的前世今生</h3>
+        <small>2024-06-09</small>
+      </div>
+      <div class="card" onclick="window.open('https://raw.githubusercontent.com/OranGeeker/blog-posts/main/2024-05-18-islands-arch.md')">
+        <h3>探索 Island Architecture 的原理与落地</h3>
+        <small>2024-05-18</small>
+      </div>
+      <div class="card" onclick="window.open('https://raw.githubusercontent.com/OranGeeker/blog-posts/main/2024-04-02-wasm-gc.md')">
+        <h3>WASM GC：浏览器里跑 Java 的未来？</h3>
+        <small>2024-04-02</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 认识下我 -->
+  <section id="about">
+    <h2 class="title"><span>ABOUT</span> 认识下我</h2>
+    <p>
+      Hi, I’m <b>Orange</b> · 00 后大学生 / AI 爱好者 / 喜欢阅读。<br/>
+    </p>
+    <p>
+      如果想联系我⬇️：<br/>
+      Mail: <a href="cheng_weize@whu.edu.cn" style="color:var(--accent2)">cheng_weize@whu.edu.cn</a><br/>
+    </p>
+  </section>
+
+<script>
+/* ========= 1. 页面切换逻辑 ========= */
+const links=document.querySelectorAll('nav a');
+const sections=document.querySelectorAll('section');
+
+// 显示指定页面
+function showPage(targetId, clickedLink){
+  sections.forEach(s=>{
+    s.classList.remove('active');
+    if(s.id===targetId.slice(1)){
+      s.classList.add('active');
+      // 添加动画效果
+      setTimeout(()=>s.classList.add('inView'),50);
+    }
+  });
+  links.forEach(l=>l.classList.remove('active'));
+  clickedLink.classList.add('active');
+}
+
+// 初始化显示首页
+window.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('home').classList.add('active');
+});
+
+// 绑定导航点击事件
+links.forEach(link=>{
+  link.addEventListener('click',(e)=>{
+    e.preventDefault();
+    showPage(link.getAttribute('href'), link);
+  });
+});
+
+/* ========= 2. 无限星星背景 ========= */
+const canvas=document.getElementById('stars');
+const ctx=canvas.getContext('2d');
+let W,H,n=250,stars=[];
+function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
+window.addEventListener('resize',resize); resize();
+for(let i=0;i<n;i++){
+  stars[i]={
+    x:Math.random()*W,
+    y:Math.random()*H,
+    r:Math.random()*1.2+0.2,
+    v:Math.random()*0.7+.2
+  };
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='rgba(0,229,255,.9)';
+  stars.forEach(s=>{
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fill();
+    s.y-=s.v;
+    if(s.y<0){s.y=H;s.x=Math.random()*W;}
+  });
+  return requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
